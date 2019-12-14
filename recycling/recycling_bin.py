@@ -165,3 +165,12 @@ def alchemy_insert(db,data,table_name,exists_behavior):
 #     not_inserted = data[~data[key].isin(already_inserted[key])]
 
     data.to_sql(table_name,db,if_exists=exists_behavior,index=False)
+
+def remove_zeros(cik):
+    if cik.startswith('0')==False:
+        return cik
+    else:
+        cik=cik[1:]
+    return remove_zeros(cik)
+
+df['index']=df['index'].map(lambda x: remove_zeros(x))
